@@ -50,6 +50,28 @@ var app = {
 var ok = true;
 var oggettoFilm;
 $(document).ready(function () {
+
+    var opts = {
+        lines: 17, // The number of lines to draw
+        length: 28, // The length of each line
+        width: 3, // The line thickness
+        radius: 18, // The radius of the inner circle
+        corners: 0, // Corner roundness (0..1)
+        rotate: 78, // The rotation offset
+        direction: 1, // 1: clockwise, -1: counterclockwise
+        color: '#000', // #rgb or #rrggbb or array of colors
+        speed: 1.1, // Rounds per second
+        trail: 93, // Afterglow percentage
+        shadow: true, // Whether to render a shadow
+        hwaccel: false, // Whether to use hardware acceleration
+        className: 'spinner', // The CSS class to assign to the spinner
+        zIndex: 2e9, // The z-index (defaults to 2000000000)
+        top: '50%', // Top position relative to parent
+        left: '50%' // Left position relative to parent
+    };
+    var target = document.getElementById('foo');
+
+    var spinner = new Spinner(opts).spin(target);
   
     //setInterval(function () { $.mobile.changePage("#menu"); }, 1500);
     app.initialize();
@@ -61,7 +83,9 @@ $(document).ready(function () {
                 $("#listaFilm").append("<li class='liListaFilm'><img class='imgfilm' src='"+data[i].posterURL+"'><p class='titleLista'>" + data[i].title +
                      "</p><input type='button' data-role='button' data-path=" + i + " class='btnOrario btnLFilm' value='Orari' /><input type='button' data-path=" + i + " class='btnTrama btnLFilm' value='Trama'></li>");
             }
+            $("#foo").fadeOut(600);
             $("#listaFilm").listview("refresh");
+           
 
             $('.btnTrama').on('click', function () {
                 $('#ImgDettaglioFilm').html("");
@@ -88,6 +112,7 @@ $(document).ready(function () {
 
                     $.mobile.changePage("#orario", { transition: "flip" });
                     var film = parseInt($(this).attr('data-path'));
+                    $('#foo').fadeIn();
                     $('#ulListaOre').html("");
                     $('#imageOrario').html("");
                     $('#imageOrario').append("<img src='" + data[film].posterURL + "' id='imgTrama1' ></img>");
@@ -103,7 +128,7 @@ $(document).ready(function () {
                                 $('#ulListaOre').append("<li class='ulLiListaOre'><p>" + data[i].day + "</p></li>");
 
                             }
-
+                            $('#foo').fadeOut(600);
                             $("#ulListaOre").listview("refresh");
 
 
@@ -171,6 +196,7 @@ $(document).ready(function () {
 
     $('#btnRegistrati').on('click', function () {
         var json = new Object();
+       
         if ($('#txtNome').val() == "" || $('#txtCognome').val() == "" || $('#txtIndirizzo').val() == "" || $('#txtUsername').val() == "" || $('#txtPassword').val() == "" || $('#txtCPassword').val() == "" || $('#txtEmail').val() == "" || $('#txtTelefono').val() == "") {
             alert('Inserire tutti i campi');
             return;
@@ -179,6 +205,7 @@ $(document).ready(function () {
             alert('Le password non corrispondono');
             return;
         }
+        $('#foo').fadeIn();
         json.name = $('#txtNome').val();
         json.surname = $('#txtCognome').val();
         json.address = $('#txtIndirizzo').val();
@@ -195,7 +222,10 @@ $(document).ready(function () {
             dataType: 'json',
             contentType: 'application/json',
             success: function (data) {
+
+                $('#foo').fadeOut(600);
                 alert('Registrazione effettuata con successo');
+
                 $.mobile.changePage('#menu', { transition: 'flip' });
             },
             error: function (xhr, errorText) {
@@ -237,5 +267,5 @@ $(document).ready(function () {
 
 
     });
-   
+ 
 });

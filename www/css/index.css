@@ -160,6 +160,16 @@ body{
     text-shadow: 0px 0px 2px #9f3232;
      font-size:17px !important;
 }
+.spinner{
+
+    width:60px;
+    height:60px;
+    position:absolute;
+    
+    top:40%;
+    left:40%;
+    z-index:100;
+}
 
 #posti{
     position:absolute;
