@@ -177,7 +177,7 @@ body{
   margin:0px;
     width:100%;
 }
-.nPosto{
+.nPosto , .nPostoNo{
     position:relative;
     float:left;
     width:5%;

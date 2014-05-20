@@ -49,8 +49,13 @@ var app = {
 };
 var ok = true;
 var oggettoFilm;
+var postiOccupati = new Array();
+var indexPosti = 0;
 $(document).ready(function () {
 
+
+    //setInterval(function () { $.mobile.changePage("#menu"); }, 1500);
+    app.initialize();
     var opts = {
         lines: 17, // The number of lines to draw
         length: 28, // The length of each line
@@ -73,8 +78,22 @@ $(document).ready(function () {
 
     var spinner = new Spinner(opts).spin(target);
 
-    //setInterval(function () { $.mobile.changePage("#menu"); }, 1500);
-    app.initialize();
+    if (localStorage.getItem('ID') != null) {
+        $('#linkLogin').html('Logout');
+        $('linkLogin').attr('href', '#')
+    }
+
+    $('#linkLogin').on('click', function (e) {
+        
+        if (localStorage.getItem('ID') != null) {
+            e.preventDefault();
+            localStorage.clear();
+            $('#linkLogin').html('Login');
+            $('#linkLogin').attr('href', '#login');
+            //$.mobile.changePage("#menu", { transition: "flip" });
+        }
+    });
+
     $.ajax({
         url: 'http://46.228.240.137/Cinema/service/films/',
         success: function (data) {
@@ -154,26 +173,73 @@ $(document).ready(function () {
 
                     $(".ulLiListaOre").on('click', function () {
 
+                        var screeningId = $(this).data('id');
+
                         $.ajax({
-                            url: 'http://46.228.240.137/Cinema/service/screening/' + $(this).data('id') + '/',
+                            url: 'http://46.228.240.137/Cinema/service/screening/' + screeningId + '/',
                             type: 'GET',
                             success: function (data) {
 
                                 $('#posti').html('');
 
-                                for (var i = 0; i < data.rows +1; ++i) {
+                                for (var i = 0; i < data.rows + 1; ++i) {
+                                    for (var j = 0; j < data.columns - 1; ++j) {
 
-                                    for (var j = 0; j < data.columns -1; ++j) {
-                                        if (j == 0)
-                                            $("#posti").append("<div class='nPosto' style='clear:left'><img src='img/pv2.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px;  ' /></div>");
+                                        if (isIn(data.occupiedSeats, i, j))
+                                            $("#posti").append("<div class='nPostoNo'><img src='img/pr2.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px; ' /></div>");
                                         else
-                                            $("#posti").append("<div class='nPosto'><img src='img/pv2.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px; ' /></div>");
-
+                                            if (j == 0)
+                                                $("#posti").append("<div data-row='" + i + "' data-column='" + j + "' class='nPosto' style='clear:left'><img src='img/pv2.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px;  ' /></div>");
+                                            else
+                                                $("#posti").append("<div data-row='" + i + "' data-column='" + j + "' class='nPosto'><img src='img/pv2.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px; ' /></div>");
                                     }
 
                                 }
+                                $('#posti').append('<div><input style="clear:both" type="button" id="btnPrenota" value="Prenota" data-role="button" /></div>');
                                 $(".nPosto").on('click', function () {
-                                    $(this).html("<img src='img/pr2.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px; ' />");
+
+
+                                    $(this).html("<img src='img/py2.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px; ' />");
+                                    postiOccupati[indexPosti] = new Object();
+                                    postiOccupati[indexPosti].row = $(this).data('row');
+                                    postiOccupati[indexPosti].column = $(this).data('column');
+                                    indexPosti++;
+
+
+                                });
+
+                                $("#btnPrenota").on('click', function () {
+                                    if (localStorage.getItem('ID') != null) {
+                                        var json = new Object();
+                                        json.idScreening = screeningId;
+                                        json.idUser = localStorage.getItem('ID');
+                                        json.reservedSeats = postiOccupati;
+                                        json = JSON.stringify(json);
+
+                                        $.ajax({
+                                            url: 'http://46.228.240.137/Cinema/service/reservation/',
+                                            type: 'POST',
+                                            data: json,
+                                            dataType: 'json',
+                                            contentType: 'application/json',
+                                            success: function (data) {
+
+                                                alert('Prenotazione effettuata con successo');
+                                                $.mobile.changePage('#menu', { transition: 'flip' });
+
+
+                                            },
+                                            error: function (xhr, errorText) {
+                                                alert('error OK' + JSON.stringify(xhr));
+                                            }
+                                        });
+
+                                    }
+
+
+                                
+
+
                                 });
 
 
@@ -207,7 +273,7 @@ $(document).ready(function () {
                               }
   
                           }*/
-                      
+
                         $.mobile.changePage("#divPostiCinema", { transition: "flip" });
 
                     });
@@ -261,6 +327,16 @@ $(document).ready(function () {
         });
     });
 
+    function isIn(array, r, c) {
+        for (var k = 0; k < array.length; ++k) {
+            if (array[k].row == r && array[k].column == c) {
+
+                return true
+            }
+        }
+        return false;
+    }
+
     $('#btnLogin').on('click', function () {
         if ($('#txtEmailL').val() == "" || $('#txtPasswordL').val() == "") {
             alert('Inserire tutti i campi');
@@ -285,10 +361,13 @@ $(document).ready(function () {
                 if (data.result != 'wrong credentials') {
                     alert('Login effettuato con successo');
                     $.mobile.changePage('#menu', { transition: 'flip' });
+                    localStorage.setItem('ID', data.result);
+                    localStorage.setItem('Email', json.email);
+                    $('#linkLogin').html('Logout');
+                    $('#linkLogin').attr('href', '#menu');
                 } else {
                     alert('Email o password errati');
                 }
-
             },
             error: function (xhr, errorText) {
                 alert('error OK' + JSON.stringify(xhr));
