@@ -1,0 +1,179 @@
+body{
+    padding:0px;
+    margin:0px;
+    background-color:#222222;
+}
+.bkAllPage{
+     background-color:#222222;
+}
+.app{
+    margin:0px;
+    padding:0px;
+    position:absolute;
+    width:100%;
+    height:100%;
+}
+#im{
+    width:100%;
+    height:100%;
+    image-rendering:optimizeSpeed;
+    image-orientation:auto;
+}
+.imgfilm{
+    width:60px;
+    height:90px;
+    padding:5px;
+    border-radius:10px;
+}
+#trama{
+      background-color:#222222;
+}
+#ImgDettaglioFilm{
+    width:100%;
+    text-align:center;
+   
+}
+#imgTrama1 {
+    width: 30%;
+ 
+    box-shadow: 0px 10px 40px #ed140d;
+    border-top-left-radius:10px;
+    border-bottom-left-radius:10px;
+    -moz-transform: skew(0deg,-20deg);
+    -ms-transform: skew(0deg,-20deg);
+    -o-transform: skew(0deg,-20deg);
+    -webkit-transform: skew(0deg,-20deg);
+    transform: skew(0deg,-20deg);
+    
+}
+#imgTrama3 {
+    width: 30%;
+    
+    box-shadow: 0px 10px 40px #ed140d;
+    border-top-right-radius:10px;
+    border-bottom-right-radius:10px;
+    -moz-transform: skew(0deg,20deg);
+    -ms-transform: skew(0deg,20deg);
+    -o-transform: skew(0deg,20deg);
+    -webkit-transform: skew(0deg,20deg);
+    transform: skew(0deg,20deg);
+}
+#imgTrama2{
+    width: 35%;
+    
+   
+     box-shadow: 0px 10px 40px #0d42ed;
+  
+    margin-bottom:2%;
+   
+}
+#fineDettaglio{
+    width:100%;
+    text-align:center;
+}
+
+#tramaOrariGo {
+    font-size: 20px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-top-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border:2px groove #ff0000;
+    -webkit-text-shadow: 0px 0px 3px #0d42ed;
+    text-shadow: 0px 0px 3px #0d42ed;
+    box-shadow: 0px -15px 70px #0d42ed;
+}
+
+.titleLista {
+    clear: right;
+    font-weight: bolder !important;
+    -webkit-text-shadow: 0px 0px 3px #060709;
+    text-shadow: 0px 0px 3px #060709;
+    color: #1168bb;
+}
+.ui-listview>li p{
+    padding:0px;
+    margin:0px;
+      font-size:17px;
+}
+.liListaFilm{
+       background-image: -webkit-radial-gradient(center, circle farthest-corner, #d35252 0%, #9f3232 100%) !important;
+ 
+    border-radius:10px !important;
+    margin:6px !important;
+    
+    box-shadow: 3px 3px 3px #0d42ed;
+}
+
+.btnLFilm{
+    padding-left:20px;
+    padding-right:20px;
+    padding-top:5px;
+    padding-bottom:5px;
+    border-radius:7px;
+    border-top-left-radius:13px;
+    border-bottom-right-radius:13px;
+   color:#25419c;
+      -webkit-text-shadow: 0px 0px 3px #0d42ed;
+        background-image: -webkit-radial-gradient(center, circle farthest-corner, #c17b7b 0%, #d34e4e 100%);
+    text-shadow: 0px 0px 3px #0d42ed;
+    font-size:15px;
+    box-shadow: 0px 5px 2px #f0f2fa;
+    font-weight:bolder;
+}
+
+.ui-overlay-a,  .ui-panel-wrapper{
+       background-color:#222222 !important;
+}
+.ui-input-search input{
+      background-image: -webkit-radial-gradient(center, circle farthest-corner, #d35252 0%, #9f3232 100%) !important;
+ 
+}
+.ui-body-a, .ui-page-theme-a .ui-body-inherit, html .ui-bar-a .ui-body-inherit, html .ui-body-a .ui-body-inherit, html body .ui-group-theme-a .ui-body-inherit, html .ui-panel-page-container-a{
+   background-color:#9f3232 !important;
+}
+#divRegForLabel label,h2{
+    color:#080808;
+    font-weight:bolder;
+    -webkit-text-shadow: 0px 0px 5px #ffffff;
+    text-shadow: 0px 0px 5px #ffffff;
+}
+#ulListaOre{
+    margin-top:50px !important;
+    margin-left:50px !important;
+    margin-right:50px !important;
+}
+#ulListaOre li{
+    background-image: -webkit-radial-gradient(center, circle farthest-corner, #d35252 0%, #9f3232 100%) !important;
+  text-align:center;
+ 
+    border-radius:10px !important;
+    margin:6px !important;
+  cursor:pointer;
+    box-shadow: 0px 3px 3px #0d42ed;
+}
+#ulListaOre p{
+      font-weight:bolder !important;
+      -webkit-text-shadow: 0px 0px 2px #9f3232;
+    text-shadow: 0px 0px 2px #9f3232;
+     font-size:17px !important;
+}
+
+#posti{
+    position:absolute;
+  padding:0px;
+  margin:0px;
+    width:100%;
+}
+.nPosto{
+    position:relative;
+    float:left;
+    width:5%;
+    cursor:pointer;
+    border-radius:3px;
+    margin:0px;
+    padding:0px;
+    
+}

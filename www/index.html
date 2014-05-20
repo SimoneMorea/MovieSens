@@ -1,0 +1,196 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+    <link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.4.2.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <title>Hello World</title>
+</head>
+<body style="margin:0px;padding:0px;">
+    <div data-role="page" id="splash" class="app" style="margin:0px;padding:0px; width:100%; height:100%; background-color:#ea3030;">
+        <div data-role="content" id="divLogo" style="margin: 0px; padding: 0px; width: 100%; height: 100%;">
+            <img src="img/moviesens.png" id="im" style="margin: 0px; padding: 0px; width: 100%; height: 100%;" />
+        </div>
+    </div>
+
+    <div data-role="page" id="menu" class="bkAllPage">
+        <div data-role="header" data-theme="b" data-icon="arrow-r " data-position="fixed">
+            <h1 id="titolo"><span id="span1">MOVIESENS</span></h1>
+            <a href="#registrazione" data-role="button" data-transition="flip">Registrazione</a>
+            <a href="#login" data-role="button" data-transition="flip">Login</a>
+        </div>
+
+        <div data-role="content">
+            <ul id="listaFilm" data-role="listview" data-inset="true" data-filter="true"></ul>
+        </div>
+
+        <div data-role="footer" data-position="fixed" data-theme="b">
+            <h1 id="titolo"><span id="span2">Data di oggi</span></h1>
+        </div>
+    </div>
+
+    <div data-role="page" id="trama" class="bkAllPage">
+        <div data-role="header" data-theme="b" data-icon="arrow-r " data-position="fixed">
+            <a href="#" data-rel="back" data-icon="back" data-iconpos="notext" data-transition="flip" >back</a>
+            <h1 id="titolo"><span id="span1">MOVIESENS</span></h1>
+        </div>
+        
+        <div data-role="content">
+            <div id="ImgDettaglioFilm">
+            </div>
+            <div id="fineDettaglio">
+
+            </div>
+                <h2>Autore</h2>
+                <span id="autore"></span>
+                
+                <h2>Anno</h2>
+                <span id="anno"></span>
+                <h2>Attori</h2>
+                <span id="attori"></span>
+            <h2>Trama</h2>
+            <span id="tramaSpan"></span>
+            </div>
+          
+        
+
+        <div data-role="footer" data-position="fixed" data-theme="b">
+            <h1 id="titolo"><span id="span2">Data di oggi</span></h1>
+        </div>
+    </div>
+
+    <div data-role="page" id="orario" class="bkAllPage">
+        <div data-role="header" data-theme="b" data-icon="arrow-r " data-position="fixed">
+            <a href="#" data-rel="back" data-icon="back" data-iconpos="notext">back</a>
+
+            <h1 id="titolo"><span id="span1">MOVIESENS</span></h1>
+        </div>
+
+        <div data-role="content">
+            <div id="imageOrario">
+
+
+            </div>
+            <div class="listaOre">
+
+                <ul id="ulListaOre" data-role="listview" data-inset="true"  ></ul>
+            </div>
+            <div class="fineOre">
+
+            </div>
+        </div>
+
+        <div data-role="footer" data-position="fixed" data-theme="b">
+            <h1 id="titolo"><span id="span2">Data di oggi</span></h1>
+        </div>
+    </div>
+
+
+
+    <div data-role="page" id="registrazione" class="bkAllPage">
+        <div data-role="header" data-theme="b" data-icon="arrow-r " data-position="fixed">
+            <a href="#" data-rel="back" data-icon="back" data-iconpos="notext" data-transition="flip">back</a>
+
+            <h1 id="titolo"><span id="span1">MOVIESENS</span></h1>
+        </div>
+
+        <div data-role="content" id="divRegForLabel">
+
+            <h2>Compila i campi sottostanti</h2>
+
+
+
+
+            <div style="width:30%; float: left;"><label for="txtNome" style="padding-top: 15px;">Nome </label></div>
+            <div style="width:70%; float: left"><input type="text" id="txtNome" /></div>
+
+            <div style="width:30%; float: left;"><label for="txtCognome" style="padding-top: 15px;">Cognome </label></div>
+            <div style="width:70%; float: left"><input type="text" id="txtCognome" /></div>
+
+            <div style="width:30%; float: left;"><label for="txtIndirizzo" style="padding-top: 15px;">Indirizzo </label></div>
+            <div style="width:70%; float: left"><input type="text" id="txtIndirizzo" /></div>
+
+            <div style="width:30%; float: left;"><label for="txtTelefono" style="padding-top: 15px;">Telefono </label></div>
+            <div style="width:70%; float: left"><input type="tel" id="txtTelefono" /></div>
+
+            <div style="width:30%; float: left;"><label for="txtEmail" style="padding-top: 15px;">Email </label></div>
+            <div style="width:70%; float: left"><input type="email" id="txtEmail" /></div>
+
+            <div style="width:30%; float: left;"><label for="txtUsername" style="padding-top: 15px;">Username </label></div>
+            <div style="width:70%; float: left"><input type="text" id="txtUsername" /></div>
+
+            <div style="width:30%; float: left;"><label for="txtPassword" style="padding-top: 15px;">Password </label></div>
+            <div style="width:70%; float: left"><input type="password" id="txtPassword" /></div>
+
+            <div style="width:30%; float: left;"><label for="txtCPassword" style="padding-top: 15px;">Conferma password </label></div>
+            <div style="width:70%; float: left"><input type="password" id="txtCPassword" /></div>
+
+
+            <div style="clear: both; width: 100%;"><input id="btnRegistrati" type="button" data-role="button" value="Registrati" /></div>
+
+
+
+
+        </div>
+
+        <div data-role="footer" data-position="fixed" data-theme="b">
+            <h1 id="titolo"><span id="span2">Data di oggi</span></h1>
+        </div>
+    </div>
+
+    <!--Pagina di Login-->
+    <div data-role="page" id="login" class="bkAllPage">
+        <div data-role="header" data-theme="b" data-icon="arrow-r " data-position="fixed">
+            <a href="#" data-rel="back" data-icon="back" data-iconpos="notext">back</a>
+
+            <h1 id="titolo"><span id="span1">MOVIESENS</span></h1>
+        </div>
+
+        <div data-role="content">
+
+            <h2 style="text-align:center;">Inserisci i dati di accesso</h2>
+            <input placeholder="E-mail" type="email" id="txtEmailL" />
+            <input placeholder="Password" type="password" id="txtPasswordL" />
+
+            <input id="btnLogin" type="button" data-role="button" value="Esegui il login" />
+
+            <div data-inset="true">
+                <h4 style="text-align:center;">Non hai un account?</h4>
+                <a href="#registrazione" id="btnRegistrati" data-inset="true" data-role="button"> Registrazione </a>
+            </div>
+
+
+
+
+        </div>
+
+        <div data-role="footer" data-position="fixed" data-theme="b">
+            <h1 id="titolo"><span id="span2">Data di oggi</span></h1>
+        </div>
+    </div>
+
+    <!--Posti cinema-->
+    <div data-role="page" id="divPostiCinema" class="bkAllPage">
+        <div data-role="header" data-theme="b" data-icon="arrow-r " data-position="fixed">
+            <a href="#" data-rel="back" data-icon="back" data-iconpos="notext">back</a>
+
+            <h1 id="titolo"><span id="span1">MOVIESENS</span></h1>
+             </div>
+
+        <div data-role="content">
+           <div id="posti">
+
+           </div>
+        </div>
+
+      
+    </div>
+
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/jquery.mobile-1.4.2.min.js"></script>
+
+    <script type="text/javascript" src="js/index.js"></script>
+
+</body>
+</html>
