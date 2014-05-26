@@ -78,10 +78,14 @@ $(document).ready(function () {
     var spinner = new Spinner(opts).spin(target);
 
     if (localStorage.getItem('ID') != null) {
-        $('#linkLogin').html('Logout');
-        $('#linkLogin').attr('href', '#');
+        $('#linkLogout').show();
+        $('#linkLogin').hide();
         $('#linkRegistrazione').hide();
+        $('#linkListaPrenotazioni').show();
+        $('#liNome').show();
+        $('#liNome').html('Benvenuto, ' + localStorage.getItem('email'));
     }
+
 
     $('#linkRegistrazione').on('click', function () {
         $('#txtNome').val('');
@@ -94,15 +98,14 @@ $(document).ready(function () {
         $('#txtCPassword').val('');
     });
 
-    $('#linkLogin').on('click', function (e) {
-
-        if (localStorage.getItem('ID') != null) {
-            e.preventDefault();
+    $('#linkLogout').on('click', function () {
             localStorage.clear();
-            $('#linkLogin').html('Login');
-            $('#linkLogin').attr('href', '#login');
+            $('#linkLogin').show();
             $('#linkRegistrazione').show();
-        }
+            $('#linkListaPrenotazioni').hide();
+            $('#linkLogout').hide();
+            $('#liNome').hide();
+            $("#mypanel").panel("close");
     });
 
     $.ajax({
@@ -148,7 +151,7 @@ $(document).ready(function () {
             alert('error OK' + JSON.stringify(xhr));
         }
     });
-    setInterval(function () {
+    /*setInterval(function () {
         if (ok) {
 
 
@@ -156,7 +159,7 @@ $(document).ready(function () {
             ok = false;
         }
 
-    }, 10);
+    }, 10);*/
 
     function listaOrari(data) {
         $('.btnOrario').on('click', function () {
@@ -183,6 +186,8 @@ $(document).ready(function () {
 
 
                     $(".ulLiListaOre").on('click', function () {
+
+                        $.mobile.changePage("#divPostiCinema", { transition: "flip" });
 
                         var screeningId = $(this).data('id');
 
@@ -307,7 +312,7 @@ $(document).ready(function () {
   
                           }*/
 
-                        $.mobile.changePage("#divPostiCinema", { transition: "flip" });
+                        
 
                     });
                 },
@@ -408,9 +413,12 @@ $(document).ready(function () {
                     $.mobile.changePage('#menu', { transition: 'flip' });
                     localStorage.setItem('ID', data.result);
                     localStorage.setItem('email', $('#txtEmailL').val());
-                    $('#linkLogin').html('Logout');
-                    $('#linkLogin').attr('href', '#menu');
+                    $('#linkListaPrenotazioni').show();
+                    $('#linkLogin').hide();
                     $('#linkRegistrazione').hide();
+                    $('#linkLogout').show();
+                    $('#liNome').show();
+                    $('#liNome').html('Benvenuto, ' + localStorage.getItem('email'));
                 } else {
                     alert('Email o password errati');
                 }

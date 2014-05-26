@@ -13,6 +13,6 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
-    <preference name="Fullscreen" value="true" />
+    <preference name="Fullscreen" value="false" />
     <plugin name="SplashScreen" value="org.apache.cordova.SplashScreen" />
 </widget>
