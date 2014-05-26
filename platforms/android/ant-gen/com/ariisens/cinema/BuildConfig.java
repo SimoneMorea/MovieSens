@@ -2,5 +2,5 @@
 package com.ariisens.cinema;
 
 public final class BuildConfig {
-    public final static boolean DEBUG = false;
+    public final static boolean DEBUG = true;
 }

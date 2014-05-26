@@ -34,15 +34,14 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function () {
         app.receivedEvent('deviceready');
+       // navigator.splashscreen.hide();
+       
     },
     // Update DOM on a Received Event
     receivedEvent: function (id) {
         var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
         var receivedElement = parentElement.querySelector('.received');
-
-
-
         console.log('Received Event: ' + id);
     }
 
@@ -80,17 +79,29 @@ $(document).ready(function () {
 
     if (localStorage.getItem('ID') != null) {
         $('#linkLogin').html('Logout');
-        $('linkLogin').attr('href', '#')
+        $('#linkLogin').attr('href', '#');
+        $('#linkRegistrazione').hide();
     }
 
+    $('#linkRegistrazione').on('click', function () {
+        $('#txtNome').val('');
+        $('#txtCognome').val('');
+        $('#txtIndirizzo').val('');
+        $('#txtUsername').val('');
+        $('#txtPassword').val('');
+        $('#txtEmail').val('');
+        $('#txtTelefono').val('');
+        $('#txtCPassword').val('');
+    });
+
     $('#linkLogin').on('click', function (e) {
-        
+
         if (localStorage.getItem('ID') != null) {
             e.preventDefault();
             localStorage.clear();
             $('#linkLogin').html('Login');
             $('#linkLogin').attr('href', '#login');
-            //$.mobile.changePage("#menu", { transition: "flip" });
+            $('#linkRegistrazione').show();
         }
     });
 
@@ -185,31 +196,52 @@ $(document).ready(function () {
                                 for (var i = 0; i < data.rows + 1; ++i) {
                                     for (var j = 0; j < data.columns - 1; ++j) {
 
-                                        if (isIn(data.occupiedSeats, i, j))
-                                            $("#posti").append("<div class='nPostoNo'><img src='img/pr2.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px; ' /></div>");
-                                        else
+                                        if (isIn(data.occupiedSeats, i, j)) {
                                             if (j == 0)
-                                                $("#posti").append("<div data-row='" + i + "' data-column='" + j + "' class='nPosto' style='clear:left'><img src='img/pv2.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px;  ' /></div>");
+                                                $("#posti").append("<div class='nPostoNo' style='clear:left;'><img src='img/pr2.png' style=' margin: 0px; padding: 0px; width: 100%; border-radius:3px; ' /></div>");
                                             else
-                                                $("#posti").append("<div data-row='" + i + "' data-column='" + j + "' class='nPosto'><img src='img/pv2.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px; ' /></div>");
+                                                $("#posti").append("<div class='nPostoNo'><img src='img/pr2.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px; ' /></div>");
+
+                                        } else
+                                            if (j == 0)
+                                                $("#posti").append("<div data-selected='false' data-row='" + i + "' data-column='" + j + "' class='nPosto' style='clear:left'><img src='img/pv2.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px;  ' /></div>");
+                                            else
+                                                $("#posti").append("<div data-selected='false' data-row='" + i + "' data-column='" + j + "' class='nPosto'><img src='img/pv2.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px; ' /></div>");
                                     }
 
                                 }
-                                $('#posti').append('<div><input style="clear:both" type="button" id="btnPrenota" value="Prenota" data-role="button" /></div>');
+                                $('#posti').append('<div style="clear:left"><input  type="button" id="btnPrenota" value="Prenota" data-role="button" /></div>');
                                 $(".nPosto").on('click', function () {
+                                  
+                                    if ($(this).data('selected') == false) {
+                                     
+                                        //$(this).html("<img src='img/py2.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px; ' />");
+                                        $(this).children('img').attr('src', 'img/py2.png');
+                                        postiOccupati[indexPosti] = new Object();
+                                        postiOccupati[indexPosti].row = $(this).data('row');
+                                        postiOccupati[indexPosti].column = $(this).data('column');
+                                        indexPosti++;
+                                        $(this).data('selected', true);
+                                    } else {
+                                        $(this).children('img').attr('src', 'img/pv2.png');
+                                        //$(this).html("<img src='img/pv2.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px; ' />");
+                                        var indexToRemove = getPosition(postiOccupati, $(this).data('row'), $(this).data('column'));
+                                        postiOccupati.splice(indexToRemove, 1);
+                                        indexPosti--;
+                                        $(this).data('selected', false);
+                                    }
 
-
-                                    $(this).html("<img src='img/py2.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px; ' />");
-                                    postiOccupati[indexPosti] = new Object();
-                                    postiOccupati[indexPosti].row = $(this).data('row');
-                                    postiOccupati[indexPosti].column = $(this).data('column');
-                                    indexPosti++;
 
 
                                 });
 
                                 $("#btnPrenota").on('click', function () {
+
                                     if (localStorage.getItem('ID') != null) {
+                                        /*for (var i = 0; i < postiOccupati.length; ++i) {
+                                            alert(postiOccupati[i].row + ", " + postiOccupati[i].column);
+                                        }*/
+                                        $('#foo').fadeIn();
                                         var json = new Object();
                                         json.idScreening = screeningId;
                                         json.idUser = localStorage.getItem('ID');
@@ -223,23 +255,24 @@ $(document).ready(function () {
                                             dataType: 'json',
                                             contentType: 'application/json',
                                             success: function (data) {
-
+                                                $('#foo').hide();
                                                 alert('Prenotazione effettuata con successo');
+                                                $('#posti').html('');
                                                 $.mobile.changePage('#menu', { transition: 'flip' });
-
-
                                             },
                                             error: function (xhr, errorText) {
                                                 alert('error OK' + JSON.stringify(xhr));
                                             }
                                         });
 
+                                    } else {
+
+                                        alert('Devi essere registrato per effettuare la prenotazione');
+                                        $.mobile.changePage('#login', { transition: 'flip' });
+
                                     }
-
-
-                                
-
-
+                                    postiOccupati = new Array();
+                                    indexPosti = 0;
                                 });
 
 
@@ -294,6 +327,10 @@ $(document).ready(function () {
             alert('Inserire tutti i campi');
             return;
         }
+        if ($('#txtPassword').val().length < 8 || $('#txtPassword').val().length < 8) {
+            alert('La password deve essere di almeno 8 caratteri');
+            return;
+        }
         if ($('#txtPassword').val() != $('#txtCPassword').val()) {
             alert('Le password non corrispondono');
             return;
@@ -316,7 +353,7 @@ $(document).ready(function () {
             contentType: 'application/json',
             success: function (data) {
 
-                $('#foo').fadeOut(600);
+                $('#foo').hide();
                 alert('Registrazione effettuata con successo');
 
                 $.mobile.changePage('#menu', { transition: 'flip' });
@@ -335,6 +372,14 @@ $(document).ready(function () {
             }
         }
         return false;
+    }
+
+    function getPosition(array, r, c) {
+        for (var k = 0; k < array.length; ++k) {
+            if (array[k].row == r && array[k].column == c) {
+                return k;
+            }
+        }
     }
 
     $('#btnLogin').on('click', function () {
@@ -357,14 +402,15 @@ $(document).ready(function () {
             dataType: 'json',
             contentType: 'application/json',
             success: function (data) {
-                $('#foo').fadeOut(600);
+                $('#foo').hide();
                 if (data.result != 'wrong credentials') {
                     alert('Login effettuato con successo');
                     $.mobile.changePage('#menu', { transition: 'flip' });
                     localStorage.setItem('ID', data.result);
-                    localStorage.setItem('Email', json.email);
+                    localStorage.setItem('email', $('#txtEmailL').val());
                     $('#linkLogin').html('Logout');
                     $('#linkLogin').attr('href', '#menu');
+                    $('#linkRegistrazione').hide();
                 } else {
                     alert('Email o password errati');
                 }

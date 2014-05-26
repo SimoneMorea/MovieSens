@@ -8,57 +8,77 @@
     <title>Hello World</title>
 </head>
 <body style="margin:0px;padding:0px;">
+
+    <!-- Spinner -->
+
+    <div id="foo" class="spinner">
+
+    </div>
+
+    <!-- Splash screen 
+
     <div data-role="page" id="splash" class="app" style="margin:0px;padding:0px; width:100%; height:100%; background-color:#ea3030;">
         <div data-role="content" id="divLogo" style="margin: 0px; padding: 0px; width: 100%; height: 100%;">
             <img src="img/moviesens.png" id="im" style="margin: 0px; padding: 0px; width: 100%; height: 100%;" />
         </div>
-    </div>
+    </div> -->
+
+    <!-- Lista film -->
 
     <div data-role="page" id="menu" class="bkAllPage">
+
+        <div data-role="panel" id="mypanel">
+            <ul data-role="listview" class="ulListaOre">
+                <li id="linkRegistrazione" class="ulLiListaOre"><a href="#registrazione" data-transition="flip">Registrazione</a></li>
+                <li id="linkLogin" class="ulLiListaOre"><a href="#login" data-transition="flip">Login</a></li>
+                <li id="linkLogout" class="ulLiListaOre"><a href="#">Logout</a></li>
+                <li class="ulLiListaOre"><a href="#" data-transition="flip">Visualizza prenotazioni</a></li>
+                
+            </ul>
+            
+        </div><!-- /panel -->
+
         <div data-role="header" data-theme="b" data-icon="arrow-r " data-position="fixed">
+            <a href="#mypanel" data-role="button" data-icon="bars" data-iconpos="notext"></a>
             <h1 id="titolo"><span id="span1">MOVIESENS</span></h1>
-            <a href="#registrazione" data-role="button" data-transition="flip">Registrazione</a>
-            <a href="#login" data-role="button" data-transition="flip">Login</a>
+            
         </div>
 
         <div data-role="content">
-            <ul id="listaFilm" data-role="listview" data-inset="true" data-filter="true"></ul>
+
+            <ul id="listaFilm" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Cerca film"></ul>
         </div>
 
-        <div data-role="footer" data-position="fixed" data-theme="b">
-            <h1 id="titolo"><span id="span2">Data di oggi</span></h1>
-        </div>
     </div>
+
+    <!-- Trama film -->
 
     <div data-role="page" id="trama" class="bkAllPage">
         <div data-role="header" data-theme="b" data-icon="arrow-r " data-position="fixed">
-            <a href="#" data-rel="back" data-icon="back" data-iconpos="notext" data-transition="flip" >back</a>
+            <a href="#" data-rel="back" data-icon="back" data-iconpos="notext" data-transition="flip">back</a>
             <h1 id="titolo"><span id="span1">MOVIESENS</span></h1>
         </div>
-        
+
         <div data-role="content">
             <div id="ImgDettaglioFilm">
             </div>
             <div id="fineDettaglio">
 
             </div>
-                <h2>Autore</h2>
-                <span id="autore"></span>
-                
-                <h2>Anno</h2>
-                <span id="anno"></span>
-                <h2>Attori</h2>
-                <span id="attori"></span>
+            <h2>Autore</h2>
+            <span id="autore"></span>
+
+            <h2>Anno</h2>
+            <span id="anno"></span>
+            <h2>Attori</h2>
+            <span id="attori"></span>
             <h2>Trama</h2>
             <span id="tramaSpan"></span>
-            </div>
-          
-        
-
-        <div data-role="footer" data-position="fixed" data-theme="b">
-            <h1 id="titolo"><span id="span2">Data di oggi</span></h1>
         </div>
+
     </div>
+
+    <!-- Orari film -->
 
     <div data-role="page" id="orario" class="bkAllPage">
         <div data-role="header" data-theme="b" data-icon="arrow-r " data-position="fixed">
@@ -72,21 +92,22 @@
 
 
             </div>
+
+
+
             <div class="listaOre">
 
-                <ul id="ulListaOre" data-role="listview" data-inset="true"  ></ul>
+                <ul id="ulListaOre" data-role="listview" data-inset="true"></ul>
             </div>
             <div class="fineOre">
 
             </div>
         </div>
 
-        <div data-role="footer" data-position="fixed" data-theme="b">
-            <h1 id="titolo"><span id="span2">Data di oggi</span></h1>
-        </div>
     </div>
 
 
+    <!-- Pagina di registrazione -->
 
     <div data-role="page" id="registrazione" class="bkAllPage">
         <div data-role="header" data-theme="b" data-icon="arrow-r " data-position="fixed">
@@ -134,9 +155,6 @@
 
         </div>
 
-        <div data-role="footer" data-position="fixed" data-theme="b">
-            <h1 id="titolo"><span id="span2">Data di oggi</span></h1>
-        </div>
     </div>
 
     <!--Pagina di Login-->
@@ -165,31 +183,32 @@
 
         </div>
 
-        <div data-role="footer" data-position="fixed" data-theme="b">
-            <h1 id="titolo"><span id="span2">Data di oggi</span></h1>
-        </div>
     </div>
 
-    <!--Posti cinema-->
+    <!-- Posti cinema -->
     <div data-role="page" id="divPostiCinema" class="bkAllPage">
         <div data-role="header" data-theme="b" data-icon="arrow-r " data-position="fixed">
             <a href="#" data-rel="back" data-icon="back" data-iconpos="notext">back</a>
 
             <h1 id="titolo"><span id="span1">MOVIESENS</span></h1>
-             </div>
-
-        <div data-role="content">
-           <div id="posti">
-
-           </div>
         </div>
 
-      
+        <div data-role="content">
+            <div style="width:100%; text-align:center;"><img src="img/screen.png" /></div>
+
+            <div id="posti">
+
+            </div>
+
+
+        </div>
+
+
     </div>
 
     <script src="js/jquery-1.10.2.js"></script>
     <script src="js/jquery.mobile-1.4.2.min.js"></script>
-
+    <script src="js/Spin.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 
 </body>

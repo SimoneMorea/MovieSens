@@ -18,57 +18,111 @@
  */
 var app = {
     // Application Constructor
-    initialize: function() {
+    initialize: function () {
         this.bindEvents();
     },
     // Bind Event Listeners
     //
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
-    bindEvents: function() {
+    bindEvents: function () {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
     // deviceready Event Handler
     //
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
-    onDeviceReady: function() {
+    onDeviceReady: function () {
         app.receivedEvent('deviceready');
+       // navigator.splashscreen.hide();
+       
     },
     // Update DOM on a Received Event
-    receivedEvent: function(id) {
+    receivedEvent: function (id) {
         var parentElement = document.getElementById(id);
         var listeningElement = parentElement.querySelector('.listening');
         var receivedElement = parentElement.querySelector('.received');
-
-       
-
         console.log('Received Event: ' + id);
     }
 
 };
 var ok = true;
 var oggettoFilm;
+var postiOccupati = new Array();
+var indexPosti = 0;
 $(document).ready(function () {
-  
+
+
     //setInterval(function () { $.mobile.changePage("#menu"); }, 1500);
     app.initialize();
-    $.ajax({ 
+    var opts = {
+        lines: 17, // The number of lines to draw
+        length: 28, // The length of each line
+        width: 3, // The line thickness
+        radius: 18, // The radius of the inner circle
+        corners: 0, // Corner roundness (0..1)
+        rotate: 78, // The rotation offset
+        direction: 1, // 1: clockwise, -1: counterclockwise
+        color: '#000', // #rgb or #rrggbb or array of colors
+        speed: 1.1, // Rounds per second
+        trail: 93, // Afterglow percentage
+        shadow: true, // Whether to render a shadow
+        hwaccel: false, // Whether to use hardware acceleration
+        className: 'spinner', // The CSS class to assign to the spinner
+        zIndex: 2e9, // The z-index (defaults to 2000000000)
+        top: '50%', // Top position relative to parent
+        left: '50%' // Left position relative to parent
+    };
+    var target = document.getElementById('foo');
+
+    var spinner = new Spinner(opts).spin(target);
+
+    if (localStorage.getItem('ID') != null) {
+        $('#linkLogin').html('Logout');
+        $('#linkLogin').attr('href', '#');
+        $('#linkRegistrazione').hide();
+    }
+
+    $('#linkRegistrazione').on('click', function () {
+        $('#txtNome').val('');
+        $('#txtCognome').val('');
+        $('#txtIndirizzo').val('');
+        $('#txtUsername').val('');
+        $('#txtPassword').val('');
+        $('#txtEmail').val('');
+        $('#txtTelefono').val('');
+        $('#txtCPassword').val('');
+    });
+
+    $('#linkLogin').on('click', function (e) {
+
+        if (localStorage.getItem('ID') != null) {
+            e.preventDefault();
+            localStorage.clear();
+            $('#linkLogin').html('Login');
+            $('#linkLogin').attr('href', '#login');
+            $('#linkRegistrazione').show();
+        }
+    });
+
+    $.ajax({
         url: 'http://46.228.240.137/Cinema/service/films/',
         success: function (data) {
             oggettoFilm = data;
             for (var i = 0; i < data.length; i++) {
-                $("#listaFilm").append("<li class='liListaFilm'><img class='imgfilm' src='"+data[i].posterURL+"'><p class='titleLista'>" + data[i].title +
+                $("#listaFilm").append("<li class='liListaFilm'><img class='imgfilm' src='" + data[i].posterURL + "'><p class='titleLista'>" + data[i].title +
                      "</p><input type='button' data-role='button' data-path=" + i + " class='btnOrario btnLFilm' value='Orari' /><input type='button' data-path=" + i + " class='btnTrama btnLFilm' value='Trama'></li>");
             }
+            $("#foo").fadeOut(600);
             $("#listaFilm").listview("refresh");
+            listaOrari(data);
 
             $('.btnTrama').on('click', function () {
                 $('#ImgDettaglioFilm').html("");
 
                 $.mobile.changePage("#trama", { transition: "flip" });
                 var film = parseInt($(this).attr('data-path'));
-                    
+
                 $('#ImgDettaglioFilm').append("<img src='" + data[film].posterURL + "' id='imgTrama1' ></img>");
                 $('#ImgDettaglioFilm').append("<img src='" + data[film].posterURL + "' id='imgTrama2' ></img>");
                 $('#ImgDettaglioFilm').append("<img src='" + data[film].posterURL + "' id='imgTrama3' ></img>");
@@ -78,74 +132,11 @@ $(document).ready(function () {
                 $('#anno').html("<p>'" + data[film].year + "'</p>");
                 $('#attori').html("<p>'" + data[film].actors + "'</p>");
                 $('#fineDettaglio').html("<input id='tramaOrariGo' type='button' data-role='button'  data-path=" + film + " class='btnOrario' value='Orari' />");
-               
-               
-                $('#orario').on('pagebeforeshow', function () {
 
-                });
-                $('.btnOrario').on('click', function () {
-
-
-                    $.mobile.changePage("#orario", { transition: "flip" });
-                    var film = parseInt($(this).attr('data-path'));
-                    $('#ulListaOre').html("");
-                    $('#imageOrario').html("");
-                    $('#imageOrario').append("<img src='" + data[film].posterURL + "' id='imgTrama1' ></img>");
-                    $('#imageOrario').append("<img src='" + data[film].posterURL + "' id='imgTrama2' ></img>");
-                    $('#imageOrario').append("<img src='" + data[film].posterURL + "' id='imgTrama3' ></img>");
-
-                    film++;
-                    $.ajax({
-                        url: 'http://46.228.240.137/Cinema/service/screeningsByFilm/' + film + '/',
-                        success: function (data) {
-
-                            for (var i = 0; i < data.length; i++) {
-                                $('#ulListaOre').append("<li class='ulLiListaOre'><p>" + data[i].day + "</p></li>");
-
-                            }
-
-                            $("#ulListaOre").listview("refresh");
-
-
-                            $(".ulLiListaOre").on('click', function () {
-                                for (var i = 0; i < 20; i++) {
-                                    if (i == 10) {
-                                        $("#posti").append("<div class='nPosto' style='clear:left;'><img src='img/nop.png' style='margin: 0px; padding: 0px; width: 100%; ' /></div>");
-
-                                    }else
-                                    $("#posti").append("<div class='nPosto' style='clear:left;'><img src='img/p.png' style='margin: 0px; padding: 0px; width: 100%; ' /></div>");
-
-                                    for (var j = 0 ; j < 18; j++) {
-                                        if (i == 10) {
-                                            $("#posti").append("<div class='nPosto'><img src='img/nop.png' style='margin: 0px; padding: 0px; width: 100%; ' /></div>");
-
-                                        } else
-                                            if (j == 3 || j == 13) {
-                                                $("#posti").append("<div class='nPosto'><img src='img/nop.png' style='margin: 0px; padding: 0px; width: 100%; ' /></div>");
-
-                                            }else
-                                    $("#posti").append("<div class='nPosto'><img src='img/p.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px; ' /></div>");
-                                    }
-                                   
-                                }
-                                $(".nPosto").on('click', function () {
-                                    $(this).html("<img src='img/pbook.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px; ' />");
-                                });
-                                $.mobile.changePage("#divPostiCinema", { transition: "flip" });
-
-                            });
-                        },
-                        error: function (xhr, errorText) {
-                            alert('error OK' + JSON.stringify(xhr));
-                        }
-                    });
+                listaOrari(data);
             });
 
-          
 
-               
-
-            });
             /*   $(".addToC").on("click", function () {
 
                    $("#productsCart").append("<p><strong>Nome:</strong>" + $(this).attr("data-nameC") + "<br/><strong>Price:</strong>" +
@@ -158,27 +149,193 @@ $(document).ready(function () {
         }
     });
     setInterval(function () {
-        if(ok){
-      
+        if (ok) {
 
-             $.mobile.changePage("#menu", { transition: "flip" });
+
+            $.mobile.changePage("#menu", { transition: "flip" });
             ok = false;
-        } 
-        
+        }
+
     }, 10);
-   
+
+    function listaOrari(data) {
+        $('.btnOrario').on('click', function () {
+            $.mobile.changePage("#orario", { transition: "flip" });
+            var film = parseInt($(this).attr('data-path'));
+            $('#foo').fadeIn();
+            $('#ulListaOre').html("");
+            $('#imageOrario').html("");
+            $('#imageOrario').append("<img src='" + data[film].posterURL + "' id='imgTrama1' ></img>");
+            $('#imageOrario').append("<img src='" + data[film].posterURL + "' id='imgTrama2' ></img>");
+            $('#imageOrario').append("<img src='" + data[film].posterURL + "' id='imgTrama3' ></img>");
+
+            film++;
+            $.ajax({
+                url: 'http://46.228.240.137/Cinema/service/screeningsByFilm/' + film + '/',
+                success: function (data) {
+
+                    for (var i = 0; i < data.length; i++) {
+                        $('#ulListaOre').append("<li data-id='" + data[i].id + "' class='ulLiListaOre'><p>" + data[i].day + " - " + data[i].hour + "</p></li>");
+
+                    }
+                    $('#foo').fadeOut(600);
+                    $("#ulListaOre").listview("refresh");
+
+
+                    $(".ulLiListaOre").on('click', function () {
+
+                        var screeningId = $(this).data('id');
+
+                        $.ajax({
+                            url: 'http://46.228.240.137/Cinema/service/screening/' + screeningId + '/',
+                            type: 'GET',
+                            success: function (data) {
+
+                                $('#posti').html('');
+
+                                for (var i = 0; i < data.rows + 1; ++i) {
+                                    for (var j = 0; j < data.columns - 1; ++j) {
+
+                                        if (isIn(data.occupiedSeats, i, j)) {
+                                            if (j == 0)
+                                                $("#posti").append("<div class='nPostoNo' style='clear:left;'><img src='img/pr2.png' style=' margin: 0px; padding: 0px; width: 100%; border-radius:3px; ' /></div>");
+                                            else
+                                                $("#posti").append("<div class='nPostoNo'><img src='img/pr2.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px; ' /></div>");
+
+                                        } else
+                                            if (j == 0)
+                                                $("#posti").append("<div data-selected='false' data-row='" + i + "' data-column='" + j + "' class='nPosto' style='clear:left'><img src='img/pv2.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px;  ' /></div>");
+                                            else
+                                                $("#posti").append("<div data-selected='false' data-row='" + i + "' data-column='" + j + "' class='nPosto'><img src='img/pv2.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px; ' /></div>");
+                                    }
+
+                                }
+                                $('#posti').append('<div style="clear:left"><input  type="button" id="btnPrenota" value="Prenota" data-role="button" /></div>');
+                                $(".nPosto").on('click', function () {
+                                  
+                                    if ($(this).data('selected') == false) {
+                                     
+                                        //$(this).html("<img src='img/py2.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px; ' />");
+                                        $(this).children('img').attr('src', 'img/py2.png');
+                                        postiOccupati[indexPosti] = new Object();
+                                        postiOccupati[indexPosti].row = $(this).data('row');
+                                        postiOccupati[indexPosti].column = $(this).data('column');
+                                        indexPosti++;
+                                        $(this).data('selected', true);
+                                    } else {
+                                        $(this).children('img').attr('src', 'img/pv2.png');
+                                        //$(this).html("<img src='img/pv2.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px; ' />");
+                                        var indexToRemove = getPosition(postiOccupati, $(this).data('row'), $(this).data('column'));
+                                        postiOccupati.splice(indexToRemove, 1);
+                                        indexPosti--;
+                                        $(this).data('selected', false);
+                                    }
+
+
+
+                                });
+
+                                $("#btnPrenota").on('click', function () {
+
+                                    if (localStorage.getItem('ID') != null) {
+                                        /*for (var i = 0; i < postiOccupati.length; ++i) {
+                                            alert(postiOccupati[i].row + ", " + postiOccupati[i].column);
+                                        }*/
+                                        $('#foo').fadeIn();
+                                        var json = new Object();
+                                        json.idScreening = screeningId;
+                                        json.idUser = localStorage.getItem('ID');
+                                        json.reservedSeats = postiOccupati;
+                                        json = JSON.stringify(json);
+
+                                        $.ajax({
+                                            url: 'http://46.228.240.137/Cinema/service/reservation/',
+                                            type: 'POST',
+                                            data: json,
+                                            dataType: 'json',
+                                            contentType: 'application/json',
+                                            success: function (data) {
+                                                $('#foo').hide();
+                                                alert('Prenotazione effettuata con successo');
+                                                $('#posti').html('');
+                                                $.mobile.changePage('#menu', { transition: 'flip' });
+                                            },
+                                            error: function (xhr, errorText) {
+                                                alert('error OK' + JSON.stringify(xhr));
+                                            }
+                                        });
+
+                                    } else {
+
+                                        alert('Devi essere registrato per effettuare la prenotazione');
+                                        $.mobile.changePage('#login', { transition: 'flip' });
+
+                                    }
+                                    postiOccupati = new Array();
+                                    indexPosti = 0;
+                                });
+
+
+                            },
+                            error: function (xhr, errorText) {
+                                alert('error OK' + JSON.stringify(xhr));
+                            }
+                        });
+
+
+
+
+
+                        /*  for (var i = 0; i < 20; i++) {
+                              if (i == 10) {
+                                  $("#posti").append("<div class='nPosto' style='clear:left;'><img src='img/nop.png' style='margin: 0px; padding: 0px; width: 100%; ' /></div>");
+  
+                              } else
+                                  $("#posti").append("<div class='nPosto' style='clear:left;'><img src='img/p.png' style='margin: 0px; padding: 0px; width: 100%; ' /></div>");
+  
+                              for (var j = 0 ; j < 18; j++) {
+                                  if (i == 10) {
+                                      $("#posti").append("<div class='nPosto'><img src='img/nop.png' style='margin: 0px; padding: 0px; width: 100%; ' /></div>");
+  
+                                  } else
+                                      if (j == 3 || j == 13) {
+                                          $("#posti").append("<div class='nPosto'><img src='img/nop.png' style='margin: 0px; padding: 0px; width: 100%; ' /></div>");
+  
+                                      } else
+                                          $("#posti").append("<div class='nPosto'><img src='img/p.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px; ' /></div>");
+                              }
+  
+                          }*/
+
+                        $.mobile.changePage("#divPostiCinema", { transition: "flip" });
+
+                    });
+                },
+                error: function (xhr, errorText) {
+                    alert('error OK' + JSON.stringify(xhr));
+                }
+            });
+        });
+    }
+
     //parte registrazione login
 
     $('#btnRegistrati').on('click', function () {
         var json = new Object();
+
         if ($('#txtNome').val() == "" || $('#txtCognome').val() == "" || $('#txtIndirizzo').val() == "" || $('#txtUsername').val() == "" || $('#txtPassword').val() == "" || $('#txtCPassword').val() == "" || $('#txtEmail').val() == "" || $('#txtTelefono').val() == "") {
             alert('Inserire tutti i campi');
+            return;
+        }
+        if ($('#txtPassword').val().length < 8 || $('#txtPassword').val().length < 8) {
+            alert('La password deve essere di almeno 8 caratteri');
             return;
         }
         if ($('#txtPassword').val() != $('#txtCPassword').val()) {
             alert('Le password non corrispondono');
             return;
         }
+        $('#foo').fadeIn();
         json.name = $('#txtNome').val();
         json.surname = $('#txtCognome').val();
         json.address = $('#txtIndirizzo').val();
@@ -195,7 +352,10 @@ $(document).ready(function () {
             dataType: 'json',
             contentType: 'application/json',
             success: function (data) {
+
+                $('#foo').hide();
                 alert('Registrazione effettuata con successo');
+
                 $.mobile.changePage('#menu', { transition: 'flip' });
             },
             error: function (xhr, errorText) {
@@ -204,11 +364,31 @@ $(document).ready(function () {
         });
     });
 
+    function isIn(array, r, c) {
+        for (var k = 0; k < array.length; ++k) {
+            if (array[k].row == r && array[k].column == c) {
+
+                return true
+            }
+        }
+        return false;
+    }
+
+    function getPosition(array, r, c) {
+        for (var k = 0; k < array.length; ++k) {
+            if (array[k].row == r && array[k].column == c) {
+                return k;
+            }
+        }
+    }
+
     $('#btnLogin').on('click', function () {
         if ($('#txtEmailL').val() == "" || $('#txtPasswordL').val() == "") {
             alert('Inserire tutti i campi');
             return;
         }
+
+        $('#foo').fadeIn();
 
         var json = new Object();
         json.email = $('#txtEmailL').val();
@@ -222,13 +402,18 @@ $(document).ready(function () {
             dataType: 'json',
             contentType: 'application/json',
             success: function (data) {
+                $('#foo').hide();
                 if (data.result != 'wrong credentials') {
                     alert('Login effettuato con successo');
                     $.mobile.changePage('#menu', { transition: 'flip' });
+                    localStorage.setItem('ID', data.result);
+                    localStorage.setItem('email', $('#txtEmailL').val());
+                    $('#linkLogin').html('Logout');
+                    $('#linkLogin').attr('href', '#menu');
+                    $('#linkRegistrazione').hide();
                 } else {
                     alert('Email o password errati');
                 }
-
             },
             error: function (xhr, errorText) {
                 alert('error OK' + JSON.stringify(xhr));
@@ -237,5 +422,5 @@ $(document).ready(function () {
 
 
     });
-   
+
 });
