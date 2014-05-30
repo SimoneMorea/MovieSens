@@ -32,13 +32,13 @@
                 <li id="linkRegistrazione"><a href="#registrazione" data-transition="flip">Registrazione</a></li>
                 <li id="linkLogin"><a href="#login" data-transition="flip">Login</a></li>
                 <li id="linkLogout" style="display: none;"><a href="#">Logout</a></li>
-                <li id="linkListaPrenotazioni" style="display: none;"><a href="#prenotazioni" data-transition="flip">Visualizza prenotazioni</a></li>
+                <li id="linkListaPrenotazioni" style="display: none;"><a href="#prenotazioni" data-transition="flip">Prenotazioni</a></li>
             </ul>
         </div><!-- /panel -->
 
         <div data-role="header" data-theme="b" data-icon="arrow-r " data-position="fixed">
             <a href="#mypanel" data-role="button" data-icon="bars" data-iconpos="notext"></a>
-            <h1 id="titolo"><span id="span1">MOVIESENS</span></h1>
+            <h1 style="padding:0px"><a href="#menu"><img src="img\\moviesenslogo.png" width="65" height="55" alt="MOVIESENS"></a></h1>
         </div>
 
         <div data-role="content">
@@ -71,7 +71,7 @@
             <span id="attori"></span>
             <h2>Trama</h2>
             <span id="tramaSpan"></span>
-			
+
         </div>
 
     </div>
@@ -145,11 +145,9 @@
             <div style="width:30%; float: left;"><label for="txtCPassword" style="padding-top: 15px;">Conferma password </label></div>
             <div style="width:70%; float: left"><input type="password" id="txtCPassword" /></div>
 
+            <div style="width: 100%; float: left"> <input id="chkPrivacy" type="checkbox" /> <span>Dichiaro di aver preso visione dell'Informativa sul trattamento dei dati personali da parte di Ariisens secondo le modalità elencate <a href="#privacy">qui</a>. </span> </div>
 
             <div style="clear: both; width: 100%;"><input id="btnRegistrati" type="button" data-role="button" value="Registrati" /></div>
-
-
-
 
         </div>
 
@@ -210,6 +208,92 @@
         </div>
 
         <div data-role="content">
+
+            <div id="divPrenotazioni">
+                <ul id="ulPrenotazioni" data-role="listview"></ul>
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+    <!-- Privacy policy -->
+
+    <div data-role="page" id="privacy" class="bkAllPage">
+        <div data-role="header" data-theme="b" data-icon="arrow-r " data-position="fixed">
+            <a href="#" data-rel="back" data-icon="back" data-iconpos="notext">back</a>
+            <h1 id="titolo"><span id="span1">MOVIESENS</span></h1>
+        </div>
+
+        <div data-role="content">
+            <p>
+                NORMATIVA SULLA PRIVACY
+
+                Informativa ai sensi dell'art. 13 del Codice della Privacy
+
+                Ai sensi dell'articolo 13 del codice della D.Lgs. 196/2003, vi rendiamo le seguenti informazioni.
+
+                Finalità del trattamento
+
+                I dati possono essere raccolti per una o più delle seguenti finalità:
+                1)fornire l'accesso ad aree riservate del Portale e di Portali/siti collegati con il presente e all'invio di comunicazioni anche di carattere commerciale, notizie, aggiornamenti sulle iniziative di Ariisens e delle società da essa controllate e/o collegate e/o Sponsor.
+                2)eventuale cessione a terzi dei suddetti dati, sempre finalizzata alla realizzazione di campagne di email marketing ed all'invio di comunicazioni di carattere commerciale. 3)eseguire gli obblighi previsti da leggi o regolamenti;
+                4)gestione contatti;
+
+            </p>
+
+            <p>
+
+                Modalità del trattamento
+
+                I dati verranno trattati con le seguenti modalità:
+                1)raccolta dati con modalità single-opt, in apposito database;
+                2)registrazione ed elaborazione su supporto cartaceo e/o magnetico;
+                3)organizzazione degli archivi in forma prevalentemente automatizzata, ai sensi del Disciplinare Tecnico in materia di misure minime di sicurezza, Allegato B del Codice della Privacy.
+            </p><p>
+                Natura obbligatoria
+
+                Tutti i dati richiesti sono obbligatori.
+
+            </p> <p>
+
+                Soggetti a cui dati potranno essere comunicati i dati personali
+
+                I dati raccolti potranno essere comunicati a:
+                1)società e imprese per usi di direct mailing o attività analoghe;
+                2)associazioni e fondazioni intenzionate ad acquistare spazi pubblicitari sulle liste o sul sito e/o collegate alla fornitura di un particolare servizio.
+                3)soggetti che debbano avere accesso ai dati, come da norme di legge o di normative secondarie e/o comunitarie.
+            </p> <p>
+                Diritti dell'interessato
+
+                Ai sensi ai sensi dell'art. 7 (Diritto di accesso ai dati personali ed altri diritti) del Codice della Privacy, vi segnaliamo che i vostri diritti in ordine al trattamento dei dati sono:
+                -	conoscere, mediante accesso gratuito l'esistenza di trattamenti di dati che possano riguardarvi;
+                -	essere informati sulla natura e sulle finalità del trattamento
+                -	ottenere a cura del titolare, senza ritardo:
+                -	la conferma dell'esistenza o meno di dati personali che vi riguardano, anche se non ancora registrati, e la comunicazione in forma intellegibile dei medesimi dati e della loro origine, nonché della logica e delle finalità su cui si basa il trattamento; la richiesta può essere rinnovata, salva l'esistenza di giustificati motivi, con intervallo non minore di novanta giorni;
+                -	la cancellazione, la trasformazione in forma anonima o il blocco dei dati trattati in violazione di legge, compresi quelli di cui non è necessaria la conservazione in relazione agli scopi per i quali i dati sono stati raccolti o successivamente trattati;
+                -	l'aggiornamento, la rettifica ovvero, qualora vi abbia interesse, l'integrazione dei dati esistenti;
+                -	opporvi in tutto o in parte per motivi legittimi al trattamento dei dati personali che vi riguardano ancorché pertinenti allo scopo della raccolta;
+                -	Vi segnaliamo che il titolare del trattamento ad ogni effetto di legge è:
+            </p>
+            <p> - ditta Ariisens </p>
+
+            <p> P. IVA 4921478620 </p>
+
+            <p> Viale dei campioni  </p>
+
+            <p> Tel/Fax: 043428396 </p>
+
+            <p> E-mail: moviesens@ariisens.com </p>
+
+            <p>
+                -	Per esercitare i diritti previsti all'art. 7 del Codice della Privacy ovvero per la cancellazione dei vostri dati dall'archivio, è sufficiente contattarci attraverso uno dei canali messi a disposizione.
+                Tutti i dati sono protetti attraverso l'uso di antivirus, firewall e protezione attraverso password.
+
+            </p>
+
 
 
         </div>

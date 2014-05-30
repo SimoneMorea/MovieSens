@@ -50,6 +50,8 @@ var ok = true;
 var oggettoFilm;
 var postiOccupati = new Array();
 var indexPosti = 0;
+var dataPrenot = new Array();
+var helpI;
 $(document).ready(function () {
 
 
@@ -83,7 +85,7 @@ $(document).ready(function () {
         $('#linkRegistrazione').hide();
         $('#linkListaPrenotazioni').show();
         $('#liNome').show();
-        $('#liNome').html('Benvenuto, ' + localStorage.getItem('email'));
+        $('#liNome').html(localStorage.getItem('email'));
     }
 
 
@@ -340,6 +342,11 @@ $(document).ready(function () {
             alert('Le password non corrispondono');
             return;
         }
+        if (!$('#chkPrivacy').prop('checked')) {
+            alert('È necessario accettare i termini e le condizioni per il trattamento dei dati personali');
+            return;
+        }
+        
         $('#foo').fadeIn();
         json.name = $('#txtNome').val();
         json.surname = $('#txtCognome').val();
@@ -392,13 +399,44 @@ $(document).ready(function () {
 
     $('#linkListaPrenotazioni').on('click', function () {
         $('#foo').fadeIn();
+        $('#ulPrenotazioni').html('');
         $.ajax({
             url: 'http://46.228.240.137/Cinema/service/reservations/' + localStorage.getItem('ID') + '/',
             type: 'GET',
             success: function (data) {
-                $('#foo').fadeOut(600);
-                for (var i = 0; i < data.length; i++) {
-                    //alert();
+       
+                var titoloFilm;
+                
+                //dataPrenot = data;
+                for (var i = 0; i < data.length; ++i) {
+                    helpI = i;
+                    var numeroPrenot = 0;
+                    for (var j = 0; j < data[i].occupiedSeats.length; ++j) {
+                        numeroPrenot++;
+                    }
+                    dataPrenot = data;
+                    $.ajax({
+                        
+                        url: 'http://46.228.240.137/Cinema/service/film/' + data[i].idFilm + '/',
+                        type: 'GET',
+                        success: function (data) {
+                            titoloFilm = data.title;
+                          
+                            $('#foo').fadeOut(600);
+                            $('#ulPrenotazioni').append('<li>' +
+                                                                    '<p id="filmPrenot">' + titoloFilm + '</p>' +
+                                                                    '<p> <span id="giornoPrenot"> ' + dataPrenot[helpI].day + ' </span> <span> - </span> <span id="oraPrenot"> ' + dataPrenot[helpI].hour + ' </span></p>' +
+                                                                    '<p> <span>Posti prenotati: </span> <span id="postiPrenot"> ' + numeroPrenot + ' </span> </p>' +
+                                                        '</li>');
+                            $('#ulPrenotazioni').listview('refresh');
+                                                    },
+                        error: function (xhr, errorText) {
+                            alert('error OK' + JSON.stringify(xhr));
+                        }
+                    });
+
+                    
+                   
                 }
             },
             error: function (xhr, errorText) {
@@ -438,7 +476,7 @@ $(document).ready(function () {
                     $('#linkRegistrazione').hide();
                     $('#linkLogout').show();
                     $('#liNome').show();
-                    $('#liNome').html('Benvenuto, ' + localStorage.getItem('email'));
+                    $('#liNome').html(localStorage.getItem('email'));
                 } else {
                     alert('Email o password errati');
                 }

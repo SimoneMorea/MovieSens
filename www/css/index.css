@@ -177,7 +177,7 @@ body{
     
     top:40%;
     left:40%;
-    z-index:100;
+    z-index:10000;
 }
 
 #posti{
