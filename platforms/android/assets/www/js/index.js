@@ -34,8 +34,8 @@ var app = {
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function () {
         app.receivedEvent('deviceready');
-       // navigator.splashscreen.hide();
-       
+        // navigator.splashscreen.hide();
+
     },
     // Update DOM on a Received Event
     receivedEvent: function (id) {
@@ -99,13 +99,13 @@ $(document).ready(function () {
     });
 
     $('#linkLogout').on('click', function () {
-            localStorage.clear();
-            $('#linkLogin').show();
-            $('#linkRegistrazione').show();
-            $('#linkListaPrenotazioni').hide();
-            $('#linkLogout').hide();
-            $('#liNome').hide();
-            $("#mypanel").panel("close");
+        localStorage.clear();
+        $('#linkLogin').show();
+        $('#linkRegistrazione').show();
+        $('#linkListaPrenotazioni').hide();
+        $('#linkLogout').hide();
+        $('#liNome').hide();
+        $("#mypanel").panel("close");
     });
 
     $.ajax({
@@ -217,9 +217,9 @@ $(document).ready(function () {
                                 }
                                 $('#posti').append('<div style="clear:left"><input  type="button" id="btnPrenota" value="Prenota" data-role="button" /></div>');
                                 $(".nPosto").on('click', function () {
-                                  
+
                                     if ($(this).data('selected') == false) {
-                                     
+
                                         //$(this).html("<img src='img/py2.png' style='margin: 0px; padding: 0px; width: 100%; border-radius:3px; ' />");
                                         $(this).children('img').attr('src', 'img/py2.png');
                                         postiOccupati[indexPosti] = new Object();
@@ -312,7 +312,7 @@ $(document).ready(function () {
   
                           }*/
 
-                        
+
 
                     });
                 },
@@ -372,7 +372,6 @@ $(document).ready(function () {
     function isIn(array, r, c) {
         for (var k = 0; k < array.length; ++k) {
             if (array[k].row == r && array[k].column == c) {
-
                 return true
             }
         }
@@ -386,6 +385,27 @@ $(document).ready(function () {
             }
         }
     }
+
+    $('#menu').on('swiperight', function () {
+        $('#mypanel').panel('open');
+    });
+
+    $('#linkListaPrenotazioni').on('click', function () {
+        $('#foo').fadeIn();
+        $.ajax({
+            url: 'http://46.228.240.137/Cinema/service/reservations/' + localStorage.getItem('ID') + '/',
+            type: 'GET',
+            success: function (data) {
+                $('#foo').fadeOut(600);
+                for (var i = 0; i < data.length; i++) {
+                    //alert();
+                }
+            },
+            error: function (xhr, errorText) {
+                alert('error OK' + JSON.stringify(xhr));
+            }
+        });
+    });
 
     $('#btnLogin').on('click', function () {
         if ($('#txtEmailL').val() == "" || $('#txtPasswordL').val() == "") {
@@ -427,8 +447,5 @@ $(document).ready(function () {
                 alert('error OK' + JSON.stringify(xhr));
             }
         });
-
-
     });
-
 });

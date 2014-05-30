@@ -5,7 +5,7 @@ C:\Users\ITS\Desktop\MovieSens\MovieSens\platforms\android\res\drawable-hdpi\ico
 C:\Users\ITS\Desktop\MovieSens\MovieSens\platforms\android\res\drawable-hdpi\splash.png \
 C:\Users\ITS\Desktop\MovieSens\MovieSens\platforms\android\res\drawable-ldpi\icon.png \
 C:\Users\ITS\Desktop\MovieSens\MovieSens\platforms\android\res\drawable-ldpi\splash.png \
-C:\Users\ITS\Desktop\MovieSens\MovieSens\platforms\android\res\drawable-mdpi\mdpi.png \
+C:\Users\ITS\Desktop\MovieSens\MovieSens\platforms\android\res\drawable-mdpi\icon.png \
 C:\Users\ITS\Desktop\MovieSens\MovieSens\platforms\android\res\drawable-mdpi\splash.png \
 C:\Users\ITS\Desktop\MovieSens\MovieSens\platforms\android\res\drawable-xhdpi\icon.png \
 C:\Users\ITS\Desktop\MovieSens\MovieSens\platforms\android\res\drawable-xhdpi\splash.png \
@@ -17,7 +17,7 @@ C:\Users\ITS\Desktop\MovieSens\MovieSens\platforms\android\ant-build\res\drawabl
 C:\Users\ITS\Desktop\MovieSens\MovieSens\platforms\android\ant-build\res\drawable-hdpi\splash.png \
 C:\Users\ITS\Desktop\MovieSens\MovieSens\platforms\android\ant-build\res\drawable-ldpi\icon.png \
 C:\Users\ITS\Desktop\MovieSens\MovieSens\platforms\android\ant-build\res\drawable-ldpi\splash.png \
-C:\Users\ITS\Desktop\MovieSens\MovieSens\platforms\android\ant-build\res\drawable-mdpi\mdpi.png \
+C:\Users\ITS\Desktop\MovieSens\MovieSens\platforms\android\ant-build\res\drawable-mdpi\icon.png \
 C:\Users\ITS\Desktop\MovieSens\MovieSens\platforms\android\ant-build\res\drawable-mdpi\splash.png \
 C:\Users\ITS\Desktop\MovieSens\MovieSens\platforms\android\ant-build\res\drawable-xhdpi\icon.png \
 C:\Users\ITS\Desktop\MovieSens\MovieSens\platforms\android\ant-build\res\drawable-xhdpi\splash.png \
